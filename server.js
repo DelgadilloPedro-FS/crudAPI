@@ -10,15 +10,18 @@ const PORT = process.env.PORT || 8000;
 
 const DATABASE_URL = process.env.DATABASE_URL;
 
+const studentrouter = require("./routes/students");
+
 const db = mongoose.connection;
 
-db.on('error', error=> console.error(error))
+db.on("error", (error) => console.error(error));
 
-db.once('open', ()=> console.log("db connected"))
+db.once("open", () => console.log("db connected"));
 
 mongoose.connect(DATABASE_URL);
-const studentrouter = require('./routes/students');
-app.use('/students', studentrouter)
+app.use(express.json())
+
+app.use("/students", studentrouter);
 
 app.listen(PORT, () => {
   console.log(`server running ${PORT}`);
